@@ -1,7 +1,7 @@
-import { foo } from "../src/index"
+import { foo } from '../src/index'
 
-describe("foo", () => {
-  it("returns foo", () => {
+describe('foo()', () => {
+  it('returns bar', () => {
     expect(foo()).toEqual('bar')
   })
 })
