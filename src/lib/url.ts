@@ -1,4 +1,4 @@
-import { format, parse } from 'path'
+import { sep, parse } from 'path'
 import { Config } from './config'
 import { Frontmatter } from './frontmatter'
 
@@ -12,24 +12,9 @@ function addSlashes (s: string): string {
 
 function buildUrl (path: string, frontmatter: Frontmatter): string {
   const { dir, name } = parse(path)
+  const slug = frontmatter.slug || name
 
-  if (frontmatter.slug) {
-    return format({
-      root: '/',
-      dir,
-      base: '',
-      name: frontmatter.slug,
-      ext: ''
-    })
-  }
-
-  return format({
-    root: '/',
-    dir,
-    base: '',
-    name: name === '_index' ? '' : name,
-    ext: ''
-  })
+  return dir.split(sep).concat(slug === '_index' ? [] : slug).join('/')
 }
 
 export function url (path: string, frontmatter: Frontmatter, config: Config): string {
