@@ -5,6 +5,7 @@ function createPage (overrides = {}): Page {
   return {
     date: new Date(),
     path: join('path', 'to', 'page.md'),
+    title: 'Page Title',
     ...overrides
   }
 }
@@ -125,7 +126,7 @@ describe('url()', () => {
   })
 
   it('generates a URL from the permalinks configuration, replacing :title from page title', () => {
-    const page = createPage({ title: 'Page Title' })
+    const page = createPage()
     const config = { permalinks: { path: '/:title/' } }
 
     const expected = '/page-title/'
@@ -134,7 +135,7 @@ describe('url()', () => {
   })
 
   it('generates a URL from the permalinks configuration, replacing :slug from page title if slug undefined', () => {
-    const page = createPage({ title: 'Page Title' })
+    const page = createPage()
     const config = { permalinks: { path: '/:slug/' } }
 
     const expected = '/page-title/'
