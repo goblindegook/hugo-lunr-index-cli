@@ -15,14 +15,20 @@ function buildUrl (path: string, frontmatter: Frontmatter): string {
 
   if (frontmatter.slug) {
     return format({
+      root: '/',
       dir,
-      name: frontmatter.slug
+      base: '',
+      name: frontmatter.slug,
+      ext: ''
     })
   }
 
   return format({
+    root: '/',
     dir,
-    name: name === '_index' ? '' : name
+    base: '',
+    name: name === '_index' ? '' : name,
+    ext: ''
   })
 }
 
