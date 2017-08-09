@@ -9,9 +9,9 @@ test('parse content with no frontmatter', () => {
 
 test('parse YAML frontmatter with --- separators', () => {
   const yaml = `---
-title: "YAML Frontmatter"
-tags: [ "yaml", "frontmatter", "test" ]
 date: 2017-08-08T00:00:00+03:00
+tags: [ "yaml", "frontmatter", "test" ]
+title: YAML Frontmatter
 ---`
   const expected = {
     date: new Date('2017-08-08T00:00:00+03:00'),
@@ -24,9 +24,9 @@ date: 2017-08-08T00:00:00+03:00
 
 test('parse YAML frontmatter with = yaml = separators', () => {
   const yaml = `= yaml =
-title: "YAML Frontmatter"
-tags: [ "yaml", "frontmatter", "test" ]
 date: 2017-08-08T00:00:00+03:00
+tags: [ "yaml", "frontmatter", "test" ]
+title: YAML Frontmatter
 = yaml =`
   const expected = {
     date: new Date('2017-08-08T00:00:00+03:00'),
@@ -39,9 +39,9 @@ date: 2017-08-08T00:00:00+03:00
 
 test('parse TOML frontmatter with +++ separators', () => {
   const toml = `+++
-title = "TOML Frontmatter"
-tags = [ "toml", "frontmatter", "test" ]
 date = 2017-08-08T00:00:00+03:00
+tags = [ "toml", "frontmatter", "test" ]
+title = "TOML Frontmatter"
 +++`
   const expected = {
     date: new Date('2017-08-08T00:00:00+03:00'),

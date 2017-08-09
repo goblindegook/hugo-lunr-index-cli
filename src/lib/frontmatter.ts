@@ -11,26 +11,26 @@ export interface Frontmatter {
 
 function parseYaml (content: string): Frontmatter {
   const match = content.match(/^((---|= yaml =)$([\s\S]*?)^(?:\2)(?:\r?\n)?)/m)
-  const yaml = match && match[3] && match[3].replace(/^\s+|\s+$/, '') || ''
-  return safeLoad(yaml)
+  return safeLoad(match && match[3] || '')
 }
 
 function parseToml (content: string): Frontmatter {
   const match = content.match(/^((?:\+\+\+)$([\s\S]*?)^(?:\+\+\+)(?:\r?\n)?)/m)
-  const toml = match && match[2] && match[2].replace(/^\s+|\s+$/, '') || ''
-  return parse(toml)
+  return parse(match && match[2] || '')
 }
 
 export function frontmatter (content: string): Frontmatter {
   const firstLine = content.split(/\r?\n/)[0]
 
-  if (firstLine === '---' || firstLine === '= yaml =') {
-    return parseYaml(content)
-  }
+  switch (firstLine) {
+    case '---':
+    case '= yaml =':
+      return parseYaml(content)
 
-  if (firstLine === '+++') {
-    return parseToml(content)
-  }
+    case '+++':
+      return parseToml(content)
 
-  return {}
+    default:
+      return {}
+  }
 }

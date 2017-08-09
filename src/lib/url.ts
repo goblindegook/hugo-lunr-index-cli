@@ -15,25 +15,21 @@ function addSlashes (s: string): string {
 function buildPermalink (page: Page, config: Config): string {
   const { dir, name } = parse(page.path)
   const section = dir.split(sep)[0]
+  const permalink = config.permalinks && config.permalinks[section] || ''
+  const title = S(page.title).slugify().s
 
-  if (section && config.permalinks && config.permalinks[section]) {
-    const title = S(page.title).slugify().s
-
-    return config.permalinks[section]
-      .replace(':yearday', format(page.date, 'DDD'))
-      .replace(':year', format(page.date, 'YYYY'))
-      .replace(':monthname', format(page.date, 'MMMM'))
-      .replace(':month', format(page.date, 'MM'))
-      .replace(':day', format(page.date, 'DD'))
-      .replace(':weekdayname', format(page.date, 'dddd'))
-      .replace(':weekday', format(page.date, 'd'))
-      .replace(':section', section)
-      .replace(':title', title)
-      .replace(':slug', page.slug || title)
-      .replace(':filename', name)
-  } else {
-    return ''
-  }
+  return permalink
+    .replace(':yearday', format(page.date, 'DDD'))
+    .replace(':year', format(page.date, 'YYYY'))
+    .replace(':monthname', format(page.date, 'MMMM'))
+    .replace(':month', format(page.date, 'MM'))
+    .replace(':day', format(page.date, 'DD'))
+    .replace(':weekdayname', format(page.date, 'dddd'))
+    .replace(':weekday', format(page.date, 'd'))
+    .replace(':section', section)
+    .replace(':title', title)
+    .replace(':slug', page.slug || title)
+    .replace(':filename', name)
 }
 
 function buildUrl (page: Page, config: Config): string {
@@ -43,9 +39,5 @@ function buildUrl (page: Page, config: Config): string {
 }
 
 export function url (page: Page, config: Config): string {
-  if (page.url) {
-    return page.url
-  }
-
-  return addSlashes(buildPermalink(page, config) || buildUrl(page, config))
+  return page.url || addSlashes(buildPermalink(page, config) || buildUrl(page, config))
 }
