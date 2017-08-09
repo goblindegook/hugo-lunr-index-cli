@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { parse, sep } from 'path'
-import * as S from 'string'
+import S from 'string'
 import { Config } from './config'
 import { Frontmatter } from './frontmatter'
 

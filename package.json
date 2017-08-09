@@ -12,15 +12,16 @@
     "test": "jest"
   },
   "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
     "moduleFileExtensions": [
       "ts",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.ts$": "<rootDir>/preprocessor.js"
-    },
-    "testMatch": [
-      "<rootDir>/test/**/*.spec.ts"
+      "tsx",
+      "js",
+      "json",
+      "jsx"
     ]
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "@types/string": "^0.0.28",
     "@types/yargs": "^8.0.2",
     "jest": "^20.0.4",
+    "ts-jest": "^20.0.10",
     "tslint": "^5.5.0",
     "tslint-config-standard": "^6.0.1",
     "typescript": "^2.4.2"
