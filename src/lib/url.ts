@@ -2,13 +2,7 @@ import { format } from 'date-fns'
 import { parse, sep } from 'path'
 import S from 'string'
 import { Config } from './config'
-import { Frontmatter } from './frontmatter'
-
-export interface Page extends Frontmatter {
-  date: Date
-  path: string
-  title: string
-}
+import { Page } from './page'
 
 function slashAtIndex (s: string, index: number): string {
   return s.length > index && s[index] !== '/' ? '/' : ''

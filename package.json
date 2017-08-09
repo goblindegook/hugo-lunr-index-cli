@@ -26,12 +26,15 @@
   },
   "dependencies": {
     "date-fns": "^1.28.5",
+    "js-yaml": "^3.9.1",
     "string": "^3.3.3",
+    "toml": "^2.3.2",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",
     "@types/jest": "^20.0.6",
+    "@types/js-yaml": "^3.9.0",
     "@types/node": "^8.0.19",
     "@types/string": "^0.0.28",
     "@types/yargs": "^8.0.2",
