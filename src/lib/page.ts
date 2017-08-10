@@ -25,8 +25,8 @@ function parseYaml (content: string): Frontmatter {
 }
 
 function parseToml (content: string): Frontmatter {
-  const match = content.match(/^((?:\+\+\+)$([\s\S]*?)^(?:\+\+\+)(?:\r?\n)?)/m)
-  return toml.parse(match && match[2] || '')
+  const match = content.match(/^((\+\+\+)$([\s\S]*?)^(?:\2)(?:\r?\n)?)/m)
+  return toml.parse(match && match[3] || '')
 }
 
 function parseFrontmatter (content: string): Frontmatter {

@@ -12,7 +12,7 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "noImplicitAny": true,
     "noResolve": false,
     "noUnusedLocals": true,
