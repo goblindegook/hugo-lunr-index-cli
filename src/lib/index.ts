@@ -5,30 +5,30 @@ import { Config } from './config'
 import { Page, parse } from './page'
 import { url } from './url'
 
-export interface IndexedPage extends Page {
+interface IndexedPage extends Page {
   url: string
 }
 
-export async function list (path: string): Promise<string[]> {
+async function list (contentDir: string): Promise<string[]> {
   const options: glob.IOptions = {
     nodir: true,
     silent: true
   }
 
-  const pattern = join(path, '**', '*')
+  const pattern = join(contentDir, '**', '*')
 
   return new Promise<string[]>((resolve, reject) => {
     glob(pattern, options, (error, files) => {
       if (error) {
         reject(error)
       } else {
-        resolve(files.map(f => f.replace(path + sep, '')))
+        resolve(files.map(f => f.replace(contentDir + sep, '')))
       }
     })
   })
 }
 
-export async function index (filepath: string, config: Config): Promise<IndexedPage> {
+async function index (filepath: string, config: Config): Promise<IndexedPage> {
   return new Promise<IndexedPage>((resolve, reject) => {
     readFile(join(config.contentDir, filepath), 'utf8', (error, content) => {
       if (error) {
@@ -43,4 +43,9 @@ export async function index (filepath: string, config: Config): Promise<IndexedP
       }
     })
   })
+}
+
+export async function indexAll (config: Config): Promise<IndexedPage[]> {
+  const files = await list(config.contentDir)
+  return Promise.all(files.map(f => index(f, config)))
 }
