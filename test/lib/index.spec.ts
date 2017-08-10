@@ -16,8 +16,10 @@ test('Scan directory for files', async () => {
 
 test('Index a single file', async () => {
   const filepath = join('page', 'markdown.md')
-  const base = join('.', 'test', 'fixtures', 'content')
-  const config = {}
+
+  const config = {
+    contentDir: join('.', 'test', 'fixtures', 'content')
+  }
 
   const expected = {
     content: 'Heading\nContent.',
@@ -26,5 +28,5 @@ test('Index a single file', async () => {
     url: '/page/markdown/'
   }
 
-  expect(await index(filepath, base, config)).toEqual(expected)
+  expect(await index(filepath, config)).toEqual(expected)
 })

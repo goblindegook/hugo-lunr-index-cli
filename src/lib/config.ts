@@ -2,6 +2,7 @@ import toml from 'toml'
 
 export interface Config {
   [key: string]: any
+  contentDir: string
   permalinks?: {
     [section: string]: string
   }

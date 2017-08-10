@@ -28,16 +28,18 @@ export async function list (path: string): Promise<string[]> {
   })
 }
 
-export async function index (path: string, base: string, config: Config): Promise<IndexedPage> {
+export async function index (filepath: string, config: Config): Promise<IndexedPage> {
   return new Promise<IndexedPage>((resolve, reject) => {
-    readFile(join(base, path), 'utf8', (error, content) => {
+    readFile(join(config.contentDir, filepath), 'utf8', (error, content) => {
       if (error) {
         reject(error)
       } else {
         const page = parse(content)
-        const pageUrl = url(path, page, config)
 
-        resolve({ url: pageUrl, ...page })
+        resolve({
+          url: url(filepath, page, config),
+          ...page
+        })
       }
     })
   })
