@@ -11,8 +11,12 @@ export interface Frontmatter {
   url?: string
 }
 
-export interface Page extends Frontmatter {
+export interface Content extends Frontmatter {
   content: string
+}
+
+export interface Page extends Content {
+  date: Date
 }
 
 function parseYaml (content: string): Frontmatter {
@@ -45,7 +49,7 @@ function parseContent (content: string): string {
   return S(marked(rawContent)).stripTags().s.trim()
 }
 
-export function parse (content: string): Page {
+export function parse (content: string): Content {
   return {
     ...parseFrontmatter(content),
     content: parseContent(content)

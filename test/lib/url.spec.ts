@@ -1,6 +1,6 @@
 import { join } from 'path'
-import { url } from '../../src/lib/url'
 import { Page } from '../../src/lib/page'
+import { url } from '../../src/lib/url'
 
 const path = join('path', 'to', 'page.md')
 

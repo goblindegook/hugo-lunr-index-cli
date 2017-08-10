@@ -17,16 +17,15 @@ function buildPermalink (path: string, page: Page, config: Config): string {
   const section = dir.split(sep)[0]
   const permalink = config.permalinks && config.permalinks[section] || ''
   const title = S(page.title).slugify().s
-  const date = page.date || new Date() // FIXME: Use file date.
 
   return permalink
-    .replace(':yearday', format(date, 'DDD'))
-    .replace(':year', format(date, 'YYYY'))
-    .replace(':monthname', format(date, 'MMMM'))
-    .replace(':month', format(date, 'MM'))
-    .replace(':day', format(date, 'DD'))
-    .replace(':weekdayname', format(date, 'dddd'))
-    .replace(':weekday', format(date, 'd'))
+    .replace(':yearday', format(page.date, 'DDD'))
+    .replace(':year', format(page.date, 'YYYY'))
+    .replace(':monthname', format(page.date, 'MMMM'))
+    .replace(':month', format(page.date, 'MM'))
+    .replace(':day', format(page.date, 'DD'))
+    .replace(':weekdayname', format(page.date, 'dddd'))
+    .replace(':weekday', format(page.date, 'd'))
     .replace(':section', section)
     .replace(':title', title)
     .replace(':slug', page.slug || title)
