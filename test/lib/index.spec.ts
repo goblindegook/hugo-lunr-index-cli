@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { statSync } from 'fs'
-import { indexAll } from '../../src/lib/index'
+import { index } from '../../src/lib/index'
 
 test('Index all files', async () => {
   const config = {
@@ -30,5 +30,5 @@ test('Index all files', async () => {
     }
   ]
 
-  expect(await indexAll(config)).toEqual(expected)
+  expect(await index(config)).toEqual(expected)
 })

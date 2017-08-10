@@ -2,14 +2,14 @@ import { readFile } from 'fs'
 import glob from 'glob'
 import { join, sep } from 'path'
 import { Config } from './config'
-import { Page, parse } from './page'
+import { Page, parsePage } from './page'
 import { url } from './url'
 
 interface IndexedPage extends Page {
   url: string
 }
 
-async function list (contentDir: string): Promise<string[]> {
+async function listPages (contentDir: string): Promise<string[]> {
   const options: glob.IOptions = {
     nodir: true,
     silent: true
@@ -28,13 +28,13 @@ async function list (contentDir: string): Promise<string[]> {
   })
 }
 
-async function index (filepath: string, config: Config): Promise<IndexedPage> {
+async function indexPage (filepath: string, config: Config): Promise<IndexedPage> {
   return new Promise<IndexedPage>((resolve, reject) => {
     readFile(join(config.contentDir, filepath), 'utf8', (error, content) => {
       if (error) {
         reject(error)
       } else {
-        const page = parse(content)
+        const page = parsePage(content)
 
         resolve({
           url: url(filepath, page, config),
@@ -45,7 +45,8 @@ async function index (filepath: string, config: Config): Promise<IndexedPage> {
   })
 }
 
-export async function indexAll (config: Config): Promise<IndexedPage[]> {
-  const files = await list(config.contentDir)
-  return Promise.all(files.map(f => index(f, config)))
+export async function index (config: Config): Promise<IndexedPage[]> {
+  const pages = await listPages(config.contentDir)
+  return Promise.all(pages.map(p => indexPage(p, config)))
+    .then(pages => pages.filter(p => !p.draft))
 }

@@ -3,9 +3,10 @@ import S from 'string'
 import toml from 'toml'
 import yaml from 'js-yaml'
 
-export interface Frontmatter {
+interface Frontmatter {
   [key: string]: any
   date: Date
+  draft?: boolean
   slug?: string
   title: string
   url?: string
@@ -48,7 +49,7 @@ function parseContent (content: string): string {
   return S(marked(rawContent)).stripTags().s.trim()
 }
 
-export function parse (content: string): Page {
+export function parsePage (content: string): Page {
   return {
     ...parseFrontmatter(content),
     content: parseContent(content)

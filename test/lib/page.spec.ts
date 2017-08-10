@@ -1,4 +1,4 @@
-import { parse } from '../../src/lib/page'
+import { parsePage } from '../../src/lib/page'
 
 test('Parse YAML frontmatter with --- separators', () => {
   const content = 'Test'
@@ -15,7 +15,7 @@ ${content}`
     title: 'YAML Frontmatter'
   }
 
-  expect(parse(yaml)).toEqual(expected)
+  expect(parsePage(yaml)).toEqual(expected)
 })
 
 test('Parse YAML frontmatter with = yaml = separators', () => {
@@ -33,7 +33,7 @@ ${content}`
     title: 'YAML Frontmatter'
   }
 
-  expect(parse(yaml)).toEqual(expected)
+  expect(parsePage(yaml)).toEqual(expected)
 })
 
 test('Parse TOML frontmatter with +++ separators', () => {
@@ -51,7 +51,7 @@ ${content}`
     title: 'TOML Frontmatter'
   }
 
-  expect(parse(toml)).toEqual(expected)
+  expect(parsePage(toml)).toEqual(expected)
 })
 
 test('Strip HTML from parsed content', () => {
@@ -63,7 +63,7 @@ title = "${title}"
 
   const expected = { content: 'Test', title }
 
-  expect(parse(toml)).toEqual(expected)
+  expect(parsePage(toml)).toEqual(expected)
 })
 
 test('Strip Markdown from parsed content', () => {
@@ -75,5 +75,5 @@ title = "${title}"
 
   const expected = { content: 'Test', title }
 
-  expect(parse(toml)).toEqual(expected)
+  expect(parsePage(toml)).toEqual(expected)
 })
