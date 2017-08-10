@@ -1,21 +1,5 @@
 import { parse } from '../../src/lib/page'
 
-test('Parse file with no content', () => {
-  const nothing = ``
-  const expected = {
-    content: ''
-  }
-
-  expect(parse(nothing)).toEqual(expected)
-})
-
-test('Parse file with only content', () => {
-  const content = `Test`
-  const expected = { content }
-
-  expect(parse(content)).toEqual(expected)
-})
-
 test('Parse YAML frontmatter with --- separators', () => {
   const content = 'Test'
   const yaml = `---

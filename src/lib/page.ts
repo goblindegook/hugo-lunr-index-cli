@@ -5,18 +5,14 @@ import yaml from 'js-yaml'
 
 export interface Frontmatter {
   [key: string]: any
-  date?: Date
+  date: Date
   slug?: string
-  title?: string
+  title: string
   url?: string
 }
 
-export interface Content extends Frontmatter {
+export interface Page extends Frontmatter {
   content: string
-}
-
-export interface Page extends Content {
-  date: Date
 }
 
 function parseYaml (content: string): Frontmatter {
@@ -40,16 +36,19 @@ function parseFrontmatter (content: string): Frontmatter {
     return parseToml(content)
   }
 
-  return {}
+  return {
+    date: new Date(),
+    title: ''
+  }
 }
 
 function parseContent (content: string): string {
-  const match = content.match(/^((---|= yaml =|\+\+\+)$[\s\S]*?^(?:\2)(?:\r?\n)?)?(.*)/m)
+  const match = content.match(/^((---|= yaml =|\+\+\+)$[\s\S]*?^(?:\2)(?:\r?\n)?)([\s\S]*)/m)
   const rawContent = match && match[3] || ''
   return S(marked(rawContent)).stripTags().s.trim()
 }
 
-export function parse (content: string): Content {
+export function parse (content: string): Page {
   return {
     ...parseFrontmatter(content),
     content: parseContent(content)
