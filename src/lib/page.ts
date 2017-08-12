@@ -17,7 +17,7 @@ export interface Page extends Frontmatter {
 }
 
 function parseYaml (content: string): Frontmatter {
-  const match = content.match(/^((---|= yaml =)$([\s\S]*?)^(?:\2)(?:\r?\n)?)/m)
+  const match = content.match(/^((---|= yaml =)$([\s\S]*?)^(?:\2|\.\.\.)(?:\r?\n)?)/m)
   return yaml.safeLoad(match && match[3] || '')
 }
 
@@ -44,7 +44,7 @@ function parseFrontmatter (content: string): Frontmatter {
 }
 
 function parseContent (content: string): string {
-  const match = content.match(/^((---|= yaml =|\+\+\+)$[\s\S]*?^(?:\2)(?:\r?\n)?)([\s\S]*)/m)
+  const match = content.match(/^((---|= yaml =|\+\+\+)$[\s\S]*?^(?:\2|\.\.\.)(?:\r?\n)?)([\s\S]*)/m)
   const rawContent = match && match[3] || ''
   return S(marked(rawContent)).stripTags().s.trim()
 }

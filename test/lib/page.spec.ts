@@ -36,6 +36,24 @@ ${content}`
   expect(parsePage(yaml)).toEqual(expected)
 })
 
+test('Parse YAML frontmatter terminated by ...', () => {
+  const content = 'Test'
+  const yaml = `---
+date: 2017-08-08T00:00:00+03:00
+tags: [ "yaml", "frontmatter", "test" ]
+title: YAML Frontmatter
+...
+${content}`
+  const expected = {
+    content,
+    date: new Date('2017-08-08T00:00:00+03:00'),
+    tags: [ 'yaml', 'frontmatter', 'test' ],
+    title: 'YAML Frontmatter'
+  }
+
+  expect(parsePage(yaml)).toEqual(expected)
+})
+
 test('Parse TOML frontmatter with +++ separators', () => {
   const content = 'Test'
   const toml = `+++
