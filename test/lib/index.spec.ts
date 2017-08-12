@@ -1,5 +1,4 @@
 import { join } from 'path'
-import { statSync } from 'fs'
 import { index } from '../../src/lib/index'
 
 test('Index all files', async () => {
