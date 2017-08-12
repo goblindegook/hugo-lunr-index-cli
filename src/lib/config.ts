@@ -11,21 +11,22 @@ export interface Config {
   }
 }
 
-export function loadConfig (configDir: string): Config {
-  const tomlConfig = join(configDir, 'config.toml')
-  const yamlConfig = join(configDir, 'config.yaml')
-  const jsonConfig = join(configDir, 'config.json')
-  let config: Config
+type Parser = (path: string) => any
 
-  if (existsSync(tomlConfig)) {
-    config = toml.parse(readFileSync(tomlConfig, 'utf8'))
-  } else if (existsSync(yamlConfig)) {
-    config = yaml.safeLoad(readFileSync(yamlConfig, 'utf8'))
-  } else if (existsSync(jsonConfig)) {
-    config = yaml.safeLoad(readFileSync(jsonConfig, 'utf8'))
-  } else {
+const parsers: { [filename: string]: Parser } = {
+  'config.toml': toml.parse,
+  'config.yaml': yaml.safeLoad,
+  'config.json': JSON.parse
+}
+
+export function loadConfig (configDir: string): Config {
+  const filename = Object.keys(parsers).find(f => existsSync(join(configDir, f)))
+
+  if (!filename) {
     throw new Error('Configuration not found')
   }
+
+  const config = parsers[filename].call(null, readFileSync(join(configDir, filename), 'utf8'))
 
   return {
     ...config,
