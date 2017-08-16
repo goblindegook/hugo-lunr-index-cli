@@ -9,6 +9,7 @@ export interface Config {
   permalinks?: {
     [section: string]: string
   }
+  staticDir: string
 }
 
 type Parser = (path: string) => any
@@ -30,6 +31,7 @@ export function loadConfig (configDir: string): Config {
 
   return {
     ...config,
-    contentDir: join(configDir, config.contentDir || 'content')
+    contentDir: join(configDir, config.contentDir || 'content'),
+    staticDir: join(configDir, config.staticDir || 'static')
   }
 }

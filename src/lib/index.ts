@@ -1,4 +1,4 @@
-import { readFile } from 'fs'
+import { readFile, writeFile } from 'fs'
 import glob from 'glob'
 import { join, sep } from 'path'
 import { Config } from './config'
@@ -45,8 +45,21 @@ async function indexPage (filepath: string, config: Config): Promise<IndexedPage
   })
 }
 
-export async function index (config: Config): Promise<IndexedPage[]> {
-  const pages = await listPages(config.contentDir)
-  return Promise.all(pages.map(p => indexPage(p, config)))
-    .then(pages => pages.filter(p => !p.draft))
+async function writeIndex (index: IndexedPage[], config: Config): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    writeFile(join(config.staticDir, 'lunr.json'), JSON.stringify(index), (error) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+export async function index (config: Config): Promise<void> {
+  const pageList = await listPages(config.contentDir)
+  const indexedPages = await Promise.all(pageList.map(p => indexPage(p, config)))
+  const index = indexedPages.filter(p => !p.draft)
+  await writeIndex(index, config)
 }

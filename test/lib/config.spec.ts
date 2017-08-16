@@ -36,7 +36,7 @@ test('Set default contentDir', () => {
 
   const expected = { contentDir: join(configDir, 'content') }
 
-  expect(loadConfig(configDir)).toEqual(expected)
+  expect(loadConfig(configDir)).toMatchObject(expected)
 })
 
 test('Redefine contentDir using config root directory', () => {
@@ -44,5 +44,21 @@ test('Redefine contentDir using config root directory', () => {
 
   const expected = { contentDir: join(configDir, 'custom') }
 
-  expect(loadConfig(configDir)).toEqual(expected)
+  expect(loadConfig(configDir)).toMatchObject(expected)
+})
+
+test('Set default staticDir', () => {
+  const configDir = join('.', 'test', 'fixtures', 'config', 'empty')
+
+  const expected = { staticDir: join(configDir, 'static') }
+
+  expect(loadConfig(configDir)).toMatchObject(expected)
+})
+
+test('Redefine contentDir using config root directory', () => {
+  const configDir = join('.', 'test', 'fixtures', 'config', 'staticDir')
+
+  const expected = { staticDir: join(configDir, 'custom') }
+
+  expect(loadConfig(configDir)).toMatchObject(expected)
 })
