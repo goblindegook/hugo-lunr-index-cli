@@ -1,7 +1,6 @@
-import { readFile, writeFile } from 'fs'
-import glob from 'glob'
 import { join, sep } from 'path'
 import { Config } from './config'
+import { globFilesP, readFileP, writeFileP } from './file'
 import { Page, parsePage } from './page'
 import { url } from './url'
 
@@ -10,51 +9,21 @@ interface IndexedPage extends Page {
 }
 
 async function listPages (contentDir: string): Promise<string[]> {
-  const options: glob.IOptions = {
-    nodir: true,
-    silent: true
-  }
-
-  const pattern = join(contentDir, '**', '*')
-
-  return new Promise<string[]>((resolve, reject) => {
-    glob(pattern, options, (error, files) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(files.map(f => f.replace(contentDir + sep, '')))
-      }
-    })
-  })
+  const files = await globFilesP(join(contentDir, '**', '*'))
+  return files.map(f => f.replace(contentDir + sep, ''))
 }
 
 async function indexPage (filepath: string, config: Config): Promise<IndexedPage> {
-  return new Promise<IndexedPage>((resolve, reject) => {
-    readFile(join(config.contentDir, filepath), 'utf8', (error, content) => {
-      if (error) {
-        reject(error)
-      } else {
-        const page = parsePage(content)
-
-        resolve({
-          url: url(filepath, page, config),
-          ...page
-        })
-      }
-    })
-  })
+  const content = await readFileP(join(config.contentDir, filepath))
+  const page = parsePage(content)
+  return {
+    url: url(filepath, page, config),
+    ...page
+  }
 }
 
 async function writeIndex (index: IndexedPage[], config: Config): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    writeFile(join(config.publishDir, config.params.lunrIndexFile), JSON.stringify(index), (error) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve()
-      }
-    })
-  })
+  await writeFileP(join(config.publishDir, config.params.lunrIndexFile), JSON.stringify(index))
 }
 
 export async function index (config: Config): Promise<void> {

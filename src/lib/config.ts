@@ -1,7 +1,8 @@
-import { existsSync, readFileSync } from 'fs'
+import { existsSync } from 'fs'
 import { join } from 'path'
 import toml from 'toml'
 import yaml from 'js-yaml'
+import { readFileP } from './file'
 
 export interface Config {
   [key: string]: any
@@ -25,23 +26,23 @@ const parsers: { [filename: string]: Parser } = {
   'config.json': JSON.parse
 }
 
-export function loadConfig (configDir: string): Config {
+export async function loadConfig (configDir: string): Promise<Config> {
   const filename = Object.keys(parsers).find(f => existsSync(join(configDir, f)))
 
   if (!filename) {
     throw new Error('Configuration not found')
   }
 
-  const config = parsers[filename].call(null, readFileSync(join(configDir, filename), 'utf8'))
+  const config = parsers[filename].call(null, await readFileP(join(configDir, filename)))
 
   return {
     ...config,
     contentDir: join(configDir, config.contentDir || 'content'),
+    publishDir: join(configDir, config.publishDir || 'public'),
     params: {
-      ...config.params,
       lunrIndexDrafts: false,
-      lunrIndexFile: 'lunr.json'
-    },
-    publishDir: join(configDir, config.publishDir || 'public')
+      lunrIndexFile: 'lunr.json',
+      ...config.params
+    }
   }
 }
