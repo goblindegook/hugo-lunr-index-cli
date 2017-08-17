@@ -5,18 +5,18 @@ import { Config } from './config'
 import { Page } from './page'
 
 function slashAtIndex (s: string, index: number): string {
-  return s.length > index && s[index] !== '/' ? '/' : ''
+  return s.length > index && s[index] === '/' ? '' : '/'
 }
 
-function addSlashes (s: string): string {
+function maybeAddSlashes (s: string): string {
   return slashAtIndex(s, 0) + s + slashAtIndex(s, s.length - 1)
 }
 
 function buildPermalink (filepath: string, page: Page, config: Partial<Config>): string {
   const { dir, name } = parse(filepath)
   const section = dir.split(sep)[0]
-  const permalink = config.permalinks && config.permalinks[section] || ''
   const title = S(page.title).slugify().s
+  const permalink = config.permalinks && config.permalinks[section] || ''
 
   return permalink
     .replace(':yearday', format(page.date, 'DDD'))
@@ -39,5 +39,5 @@ function buildUrl (filepath: string, page: Page): string {
 }
 
 export function url (filepath: string, page: Page, config: Partial<Config>): string {
-  return page.url || addSlashes(buildPermalink(filepath, page, config) || buildUrl(filepath, page))
+  return page.url || maybeAddSlashes(buildPermalink(filepath, page, config) || buildUrl(filepath, page))
 }

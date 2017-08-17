@@ -1,9 +1,9 @@
 import { mkdtempSync, readFileSync } from 'fs'
-import { join, sep } from 'path'
+import { join } from 'path'
 import { tmpdir } from 'os'
 import { index } from '../../src/lib/index'
 
-const tmp = mkdtempSync(tmpdir() + sep + 'hugo-lunr-index-cli-')
+const tmp = mkdtempSync(join(tmpdir(), 'hugo-lunr-index-cli-'))
 
 function jsonNormalize (data: any): any {
   return JSON.parse(JSON.stringify(data))
