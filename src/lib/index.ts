@@ -47,7 +47,7 @@ async function indexPage (filepath: string, config: Config): Promise<IndexedPage
 
 async function writeIndex (index: IndexedPage[], config: Config): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    writeFile(join(config.staticDir, config.params.lunrIndexFile), JSON.stringify(index), (error) => {
+    writeFile(join(config.publishDir, config.params.lunrIndexFile), JSON.stringify(index), (error) => {
       if (error) {
         reject(error)
       } else {

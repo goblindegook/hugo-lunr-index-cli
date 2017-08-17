@@ -14,7 +14,7 @@ export interface Config {
   permalinks?: {
     [section: string]: string
   }
-  staticDir: string
+  publishDir: string
 }
 
 type Parser = (path: string) => any
@@ -42,6 +42,6 @@ export function loadConfig (configDir: string): Config {
       lunrIndexDrafts: false,
       lunrIndexFile: 'lunr.json'
     },
-    staticDir: join(configDir, config.staticDir || 'static')
+    publishDir: join(configDir, config.publishDir || 'public')
   }
 }

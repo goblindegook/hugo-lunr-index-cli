@@ -36,15 +36,15 @@ test('Redefine contentDir using config root directory', () => {
   expect(loadConfig(configDir)).toMatchObject(expected)
 })
 
-test('Set default staticDir', () => {
+test('Set default publishDir', () => {
   const configDir = join('.', 'test', 'fixtures', 'config', 'empty')
-  const expected = { staticDir: join(configDir, 'static') }
+  const expected = { publishDir: join(configDir, 'public') }
   expect(loadConfig(configDir)).toMatchObject(expected)
 })
 
 test('Redefine contentDir using config root directory', () => {
-  const configDir = join('.', 'test', 'fixtures', 'config', 'staticDir')
-  const expected = { staticDir: join(configDir, 'custom') }
+  const configDir = join('.', 'test', 'fixtures', 'config', 'publishDir')
+  const expected = { publishDir: join(configDir, 'custom') }
   expect(loadConfig(configDir)).toMatchObject(expected)
 })
 

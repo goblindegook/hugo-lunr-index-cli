@@ -16,7 +16,7 @@ test('Index all pages to foo.json, excluding drafts', async () => {
       lunrIndexDrafts: false,
       lunrIndexFile: 'foo.json'
     },
-    staticDir: tmp
+    publishDir: tmp
   }
 
   const expected = [
@@ -44,7 +44,7 @@ test('Index all pages to foo.json, excluding drafts', async () => {
 
   await index(config)
 
-  const actual = JSON.parse(readFileSync(join(config.staticDir, config.params.lunrIndexFile), 'utf8'))
+  const actual = JSON.parse(readFileSync(join(config.publishDir, config.params.lunrIndexFile), 'utf8'))
 
   expect(actual).toEqual(jsonNormalize(expected))
 })
@@ -56,7 +56,7 @@ test('Index all pages to foo.json, including drafts', async () => {
       lunrIndexDrafts: true,
       lunrIndexFile: 'foo.json'
     },
-    staticDir: tmp
+    publishDir: tmp
   }
 
   const expected = {
@@ -69,7 +69,7 @@ test('Index all pages to foo.json, including drafts', async () => {
 
   await index(config)
 
-  const actual = JSON.parse(readFileSync(join(config.staticDir, config.params.lunrIndexFile), 'utf8'))
+  const actual = JSON.parse(readFileSync(join(config.publishDir, config.params.lunrIndexFile), 'utf8'))
 
   expect(actual).toContainEqual(jsonNormalize(expected))
 })
