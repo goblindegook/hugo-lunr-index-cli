@@ -9,9 +9,13 @@ function jsonNormalize (data: any): any {
   return JSON.parse(JSON.stringify(data))
 }
 
-test('Index all files', async () => {
+test('Index all pages to foo.json, excluding drafts', async () => {
   const config = {
     contentDir: join('.', 'test', 'fixtures', 'content'),
+    params: {
+      lunrIndexDrafts: false,
+      lunrIndexFile: 'foo.json'
+    },
     staticDir: tmp
   }
 
@@ -40,7 +44,32 @@ test('Index all files', async () => {
 
   await index(config)
 
-  const actual = JSON.parse(readFileSync(join(config.staticDir, 'lunr.json'), 'utf8'))
+  const actual = JSON.parse(readFileSync(join(config.staticDir, config.params.lunrIndexFile), 'utf8'))
 
   expect(actual).toEqual(jsonNormalize(expected))
+})
+
+test('Index all pages to foo.json, including drafts', async () => {
+  const config = {
+    contentDir: join('.', 'test', 'fixtures', 'content'),
+    params: {
+      lunrIndexDrafts: true,
+      lunrIndexFile: 'foo.json'
+    },
+    staticDir: tmp
+  }
+
+  const expected = {
+    content: 'This is a draft.',
+    date: new Date('2017-08-08T00:00:00+03:00'),
+    draft: true,
+    title: 'Draft',
+    url: '/page/draft/'
+  }
+
+  await index(config)
+
+  const actual = JSON.parse(readFileSync(join(config.staticDir, config.params.lunrIndexFile), 'utf8'))
+
+  expect(actual).toContainEqual(jsonNormalize(expected))
 })

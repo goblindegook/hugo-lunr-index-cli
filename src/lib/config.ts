@@ -6,6 +6,11 @@ import yaml from 'js-yaml'
 export interface Config {
   [key: string]: any
   contentDir: string
+  params: {
+    [param: string]: any
+    lunrIndexDrafts: boolean
+    lunrIndexFile: string
+  }
   permalinks?: {
     [section: string]: string
   }
@@ -32,6 +37,11 @@ export function loadConfig (configDir: string): Config {
   return {
     ...config,
     contentDir: join(configDir, config.contentDir || 'content'),
+    params: {
+      ...config.params,
+      lunrIndexDrafts: false,
+      lunrIndexFile: 'lunr.json'
+    },
     staticDir: join(configDir, config.staticDir || 'static')
   }
 }

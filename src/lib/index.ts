@@ -47,7 +47,7 @@ async function indexPage (filepath: string, config: Config): Promise<IndexedPage
 
 async function writeIndex (index: IndexedPage[], config: Config): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    writeFile(join(config.staticDir, 'lunr.json'), JSON.stringify(index), (error) => {
+    writeFile(join(config.staticDir, config.params.lunrIndexFile), JSON.stringify(index), (error) => {
       if (error) {
         reject(error)
       } else {
@@ -60,6 +60,6 @@ async function writeIndex (index: IndexedPage[], config: Config): Promise<void> 
 export async function index (config: Config): Promise<void> {
   const pageList = await listPages(config.contentDir)
   const indexedPages = await Promise.all(pageList.map(p => indexPage(p, config)))
-  const index = indexedPages.filter(p => !p.draft)
+  const index = indexedPages.filter(p => config.params.lunrIndexDrafts || !p.draft)
   await writeIndex(index, config)
 }
