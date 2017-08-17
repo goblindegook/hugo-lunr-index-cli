@@ -22,16 +22,15 @@
     "outDir": "dist/",
     "preserveConstEnums": true,
     "removeComments": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strictNullChecks": true,
     "target": "es6"
   },
   "include": [
-    "__mocks__/**/*.ts",
-    "src/**/*.ts",
-    "test/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "test/**/*.ts"
   ]
 }

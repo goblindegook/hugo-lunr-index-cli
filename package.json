@@ -8,7 +8,7 @@
   "scripts": {
     "prepublish": "npm test && npm run build",
     "pretest": "tslint {src,test}/**/*.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "test": "jest"
   },
   "jest": {
