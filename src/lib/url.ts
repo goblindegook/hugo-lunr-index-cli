@@ -12,7 +12,7 @@ function addSlashes (s: string): string {
   return slashAtIndex(s, 0) + s + slashAtIndex(s, s.length - 1)
 }
 
-function buildPermalink (filepath: string, page: Page, config: Config): string {
+function buildPermalink (filepath: string, page: Page, config: Partial<Config>): string {
   const { dir, name } = parse(filepath)
   const section = dir.split(sep)[0]
   const permalink = config.permalinks && config.permalinks[section] || ''
@@ -32,12 +32,12 @@ function buildPermalink (filepath: string, page: Page, config: Config): string {
     .replace(':filename', name)
 }
 
-function buildUrl (filepath: string, page: Page, config: Config): string {
+function buildUrl (filepath: string, page: Page): string {
   const { dir, name } = parse(filepath)
   const slug = page.slug || name
   return dir.split(sep).concat(slug === '_index' ? [] : slug).join('/')
 }
 
-export function url (filepath: string, page: Page, config: Config): string {
-  return page.url || addSlashes(buildPermalink(filepath, page, config) || buildUrl(filepath, page, config))
+export function url (filepath: string, page: Page, config: Partial<Config>): string {
+  return page.url || addSlashes(buildPermalink(filepath, page, config) || buildUrl(filepath, page))
 }

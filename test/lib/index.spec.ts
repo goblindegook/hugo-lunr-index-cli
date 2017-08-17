@@ -21,20 +21,6 @@ test('Index all pages to foo.json, excluding drafts', async () => {
 
   const expected = [
     {
-      content: 'Content.',
-      date: new Date('2017-08-08T00:00:00+03:00'),
-      tags: [ 'toml', 'frontmatter', 'test' ],
-      title: 'TOML Frontmatter',
-      url: '/frontmatter/toml/'
-    },
-    {
-      content: 'Content.',
-      date: new Date('2017-08-08T00:00:00+03:00'),
-      tags: [ 'yaml', 'frontmatter', 'test' ],
-      title: 'YAML Frontmatter',
-      url: '/frontmatter/yaml/'
-    },
-    {
       content: 'Heading\nContent.',
       date: new Date('2017-08-08T00:00:00+03:00'),
       title: 'Markdown',
@@ -59,17 +45,25 @@ test('Index all pages to foo.json, including drafts', async () => {
     publishDir: tmp
   }
 
-  const expected = {
-    content: 'This is a draft.',
-    date: new Date('2017-08-08T00:00:00+03:00'),
-    draft: true,
-    title: 'Draft',
-    url: '/page/draft/'
-  }
+  const expected = [
+    {
+      content: 'This is a draft.',
+      date: new Date('2017-08-08T00:00:00+03:00'),
+      draft: true,
+      title: 'Draft',
+      url: '/page/draft/'
+    },
+    {
+      content: 'Heading\nContent.',
+      date: new Date('2017-08-08T00:00:00+03:00'),
+      title: 'Markdown',
+      url: '/page/markdown/'
+    }
+  ]
 
   await index(config)
 
   const actual = JSON.parse(readFileSync(join(config.publishDir, config.params.lunrIndexFile), 'utf8'))
 
-  expect(actual).toContainEqual(jsonNormalize(expected))
+  expect(actual).toEqual(jsonNormalize(expected))
 })
