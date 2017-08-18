@@ -1,4 +1,4 @@
-import { mkdtempSync, readFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
 import { globFilesP, readFileP, writeFileP } from '../../src/lib/file'
@@ -21,8 +21,7 @@ test('readFileP reads and returns data from the filesystem', async () => {
 })
 
 test('writeFileP writes data to the filesystem', async () => {
-  const tmp = mkdtempSync(join(tmpdir(), 'hugo-lunr-index-cli-'))
-  const path = join(tmp, 'hello.txt')
+  const path = join(tmpdir(), `hugo-lunr-index-cli-${Date.now()}.txt`)
   const data = 'Hello, world!'
   await writeFileP(path, data)
   expect(readFileSync(path, 'utf8')).toBe(data)

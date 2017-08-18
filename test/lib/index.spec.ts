@@ -1,10 +1,8 @@
-import { mkdtempSync, readFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
 import { Config } from '../../src/lib/config'
 import { index } from '../../src/lib/index'
-
-const tmp = mkdtempSync(join(tmpdir(), 'hugo-lunr-index-cli-'))
 
 function jsonNormalize (data: any): any {
   return JSON.parse(JSON.stringify(data))
@@ -12,15 +10,15 @@ function jsonNormalize (data: any): any {
 
 function createConfig (lunrIndexDrafts = false): Config {
   return {
-    contentDir: join('.', 'test', 'fixtures', 'content'),
+    contentDir: join('test', 'fixtures', 'content'),
     params: {
       lunrIndexDrafts,
-      lunrIndexFile: 'foo.json'
+      lunrIndexFile: `hugo-lunr-index-cli-${Date.now()}.json`
     },
     permalinks: {
       page: '/permalink/:filename/'
     },
-    publishDir: tmp
+    publishDir: tmpdir()
   }
 }
 
