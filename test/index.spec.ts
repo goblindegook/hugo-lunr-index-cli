@@ -27,5 +27,5 @@ test('Writes index file to published path.', async () => {
 test('Outputs error when no config file found.', async () => {
   const { stderr } = await execa('ts-node', ['./src/index.ts', '.'])
 
-  expect(stderr).toContain(`Error: Site configuration not found.`)
+  expect(stderr).toContain(`Error: site configuration not found.`)
 })

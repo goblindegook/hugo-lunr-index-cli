@@ -34,7 +34,7 @@ export async function loadConfig (configDir: string): Promise<Config> {
   const filename = Object.keys(parsers).find(f => existsSync(join(configDir, f)))
 
   if (!filename) {
-    throw new Error('Site configuration not found')
+    throw new Error('site configuration not found')
   }
 
   const config = parsers[filename].call(null, await readFileP(join(configDir, filename)))

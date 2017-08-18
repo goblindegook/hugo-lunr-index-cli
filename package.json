@@ -1,17 +1,34 @@
 {
   "name": "hugo-lunr-index-cli",
   "version": "0.0.0",
-  "description": "Generates Lunr search indices for a Hugo static site.",
-  "bin": "dist/index.js",
-  "main": "dist/index.js",
-  "author": "Luís Rodrigues",
+  "description": "Generate Lunr search indices for a Hugo static site.",
   "license": "MIT",
+  "author": {
+    "name": "Luís Rodrigues",
+    "email": "hello@goblindegook.com",
+    "url": "https://goblindegook.com"
+  },
+  "bin": {
+    "hugo-lunr-index": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=6"
+  },
   "scripts": {
-    "prepublish": "npm test && npm run build",
-    "pretest": "tslint {src,test}/**/*.ts",
     "build": "tsc -p tsconfig.build.json",
+    "lint": "tslint {src,test}/**/*.ts",
+    "prepublish": "npm test && npm run build",
+    "pretest": "npm run lint",
     "test": "jest"
   },
+  "keywords": [
+    "hugo",
+    "indexer",
+    "lunr",
+    "search",
+    "site",
+    "static"
+  ],
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
