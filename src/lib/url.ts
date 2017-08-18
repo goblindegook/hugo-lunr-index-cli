@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { parse, sep } from 'path'
-import S from 'string'
+import * as S from 'string'
 import { Permalinks } from './config'
 import { Page } from './page'
 

@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'fs'
-import glob from 'glob'
+import * as glob from 'glob'
 
 export async function globFilesP (pattern: string): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {

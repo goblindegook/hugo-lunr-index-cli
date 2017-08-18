@@ -1,7 +1,7 @@
-import yaml from 'js-yaml'
-import marked from 'marked'
-import S from 'string'
-import toml from 'toml'
+import * as yaml from 'js-yaml'
+import * as marked from 'marked'
+import * as S from 'string'
+import * as toml from 'toml'
 
 interface Frontmatter {
   [key: string]: any

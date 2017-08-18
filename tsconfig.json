@@ -1,7 +1,8 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
+    "allowUnreachableCode": false,
     "declaration": false,
     "importHelpers": false,
     "lib": [

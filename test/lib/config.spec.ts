@@ -25,7 +25,7 @@ test('Throws an error if no configuration files are found', async () => {
     await loadConfig(configDir)
     fail()
   } catch (e) {
-    expect(e).toEqual(new Error('Configuration not found'))
+    expect(e).toEqual(new Error('Site configuration not found'))
   }
 })
 

@@ -1,7 +1,7 @@
 import { existsSync } from 'fs'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml'
 import { join } from 'path'
-import toml from 'toml'
+import * as toml from 'toml'
 import { readFileP } from './file'
 
 interface Params {
@@ -34,7 +34,7 @@ export async function loadConfig (configDir: string): Promise<Config> {
   const filename = Object.keys(parsers).find(f => existsSync(join(configDir, f)))
 
   if (!filename) {
-    throw new Error('Configuration not found')
+    throw new Error('Site configuration not found')
   }
 
   const config = parsers[filename].call(null, await readFileP(join(configDir, filename)))
