@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { parse, sep } from 'path'
 import S from 'string'
-import { Config } from './config'
+import { Permalinks } from './config'
 import { Page } from './page'
 
 function slashAtIndex (s: string, index: number): string {
@@ -12,13 +12,13 @@ function maybeAddSlashes (s: string): string {
   return slashAtIndex(s, 0) + s + slashAtIndex(s, s.length - 1)
 }
 
-function buildPermalink (filepath: string, page: Page, config: Partial<Config>): string {
+function buildPermalink (filepath: string, page: Page, permalinks: Permalinks): string {
+  const title = S(page.title).slugify().s
   const { dir, name } = parse(filepath)
   const section = dir.split(sep)[0]
-  const title = S(page.title).slugify().s
-  const permalink = config.permalinks && config.permalinks[section] || ''
+  const sectionPermalink = permalinks[section] || ''
 
-  return permalink
+  return sectionPermalink
     .replace(':yearday', format(page.date, 'DDD'))
     .replace(':year', format(page.date, 'YYYY'))
     .replace(':monthname', format(page.date, 'MMMM'))
@@ -38,6 +38,6 @@ function buildUrl (filepath: string, page: Page): string {
   return dir.split(sep).concat(slug === '_index' ? [] : slug).join('/')
 }
 
-export function url (filepath: string, page: Page, config: Partial<Config>): string {
-  return page.url || maybeAddSlashes(buildPermalink(filepath, page, config) || buildUrl(filepath, page))
+export function url (filepath: string, page: Page, permalinks: Permalinks = {}): string {
+  return page.url || maybeAddSlashes(buildPermalink(filepath, page, permalinks) || buildUrl(filepath, page))
 }

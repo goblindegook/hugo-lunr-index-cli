@@ -1,6 +1,7 @@
 import { mkdtempSync, readFileSync } from 'fs'
-import { join } from 'path'
 import { tmpdir } from 'os'
+import { join } from 'path'
+import { Config } from '../../src/lib/config'
 import { index } from '../../src/lib/index'
 
 const tmp = mkdtempSync(join(tmpdir(), 'hugo-lunr-index-cli-'))
@@ -9,22 +10,29 @@ function jsonNormalize (data: any): any {
   return JSON.parse(JSON.stringify(data))
 }
 
-test('Index all pages to foo.json, excluding drafts', async () => {
-  const config = {
+function createConfig (lunrIndexDrafts = false): Config {
+  return {
     contentDir: join('.', 'test', 'fixtures', 'content'),
     params: {
-      lunrIndexDrafts: false,
+      lunrIndexDrafts,
       lunrIndexFile: 'foo.json'
+    },
+    permalinks: {
+      page: '/permalink/:filename/'
     },
     publishDir: tmp
   }
+}
+
+test('Index all pages to foo.json, excluding drafts', async () => {
+  const config = createConfig()
 
   const expected = [
     {
       content: 'Heading\nContent.',
       date: new Date('2017-08-08T00:00:00+03:00'),
       title: 'Markdown',
-      url: '/page/markdown/'
+      url: '/permalink/markdown/'
     }
   ]
 
@@ -36,14 +44,7 @@ test('Index all pages to foo.json, excluding drafts', async () => {
 })
 
 test('Index all pages to foo.json, including drafts', async () => {
-  const config = {
-    contentDir: join('.', 'test', 'fixtures', 'content'),
-    params: {
-      lunrIndexDrafts: true,
-      lunrIndexFile: 'foo.json'
-    },
-    publishDir: tmp
-  }
+  const config = createConfig(true)
 
   const expected = [
     {
@@ -51,13 +52,13 @@ test('Index all pages to foo.json, including drafts', async () => {
       date: new Date('2017-08-08T00:00:00+03:00'),
       draft: true,
       title: 'Draft',
-      url: '/page/draft/'
+      url: '/permalink/draft/'
     },
     {
       content: 'Heading\nContent.',
       date: new Date('2017-08-08T00:00:00+03:00'),
       title: 'Markdown',
-      url: '/page/markdown/'
+      url: '/permalink/markdown/'
     }
   ]
 

@@ -1,20 +1,24 @@
 import { existsSync } from 'fs'
+import yaml from 'js-yaml'
 import { join } from 'path'
 import toml from 'toml'
-import yaml from 'js-yaml'
 import { readFileP } from './file'
+
+interface Params {
+  [param: string]: any
+  lunrIndexDrafts: boolean
+  lunrIndexFile: string
+}
+
+export interface Permalinks {
+  [section: string]: string
+}
 
 export interface Config {
   [key: string]: any
   contentDir: string
-  params: {
-    [param: string]: any
-    lunrIndexDrafts: boolean
-    lunrIndexFile: string
-  }
-  permalinks?: {
-    [section: string]: string
-  }
+  params: Params
+  permalinks?: Permalinks
   publishDir: string
 }
 

@@ -17,7 +17,7 @@ async function indexPage (filepath: string, config: Config): Promise<IndexedPage
   const content = await readFileP(join(config.contentDir, filepath))
   const page = parsePage(content)
   return {
-    url: url(filepath, page, config),
+    url: url(filepath, page, config.permalinks),
     ...page
   }
 }

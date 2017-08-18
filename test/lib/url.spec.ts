@@ -35,124 +35,124 @@ test('Generate a URL from the file path with a frontmatter "slug" override', () 
 
   const expected = '/path/to/slug/'
 
-  expect(url(path, page, {})).toBe(expected)
+  expect(url(path, page)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration', () => {
   const page = createPage()
-  const config = { permalinks: { path: 'test' } }
+  const permalinks = { path: 'test' }
 
   const expected = '/test/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :year from page date', () => {
   const page = createPage({ date: new Date(2017, 7) })
-  const config = { permalinks: { path: '/:year/' } }
+  const permalinks = { path: '/:year/' }
 
   const expected = '/2017/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :month from page date', () => {
   const page = createPage({ date: new Date(2017, 7) })
-  const config = { permalinks: { path: '/:month/' } }
+  const permalinks = { path: '/:month/' }
 
   const expected = '/08/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :monthname from page date', () => {
   const page = createPage({ date: new Date(2017, 7) })
-  const config = { permalinks: { path: '/:monthname/' } }
+  const permalinks = { path: '/:monthname/' }
 
   const expected = '/August/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :day from page date', () => {
   const page = createPage({ date: new Date(2017, 7, 9) })
-  const config = { permalinks: { path: '/:day/' } }
+  const permalinks = { path: '/:day/' }
 
   const expected = '/09/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :weekday from page date', () => {
   const page = createPage({ date: new Date(2017, 7, 9) })
-  const config = { permalinks: { path: '/:weekday/' } }
+  const permalinks = { path: '/:weekday/' }
 
   const expected = '/3/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :weekday from page date', () => {
   const page = createPage({ date: new Date(2017, 7, 9) })
-  const config = { permalinks: { path: '/:weekdayname/' } }
+  const permalinks = { path: '/:weekdayname/' }
 
   const expected = '/Wednesday/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :yearday from page date', () => {
   const page = createPage({ date: new Date(2017, 7, 9) })
-  const config = { permalinks: { path: '/:yearday/' } }
+  const permalinks = { path: '/:yearday/' }
 
   const expected = '/221/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :section from page section', () => {
   const page = createPage({})
-  const config = { permalinks: { path: '/:section/' } }
+  const permalinks = { path: '/:section/' }
 
   const expected = '/path/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :slug from page slug', () => {
   const page = createPage({ slug: 'slug' })
-  const config = { permalinks: { path: '/:slug/' } }
+  const permalinks = { path: '/:slug/' }
 
   const expected = '/slug/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :title from page title', () => {
   const page = createPage()
-  const config = { permalinks: { path: '/:title/' } }
+  const permalinks = { path: '/:title/' }
 
   const expected = '/page-title/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :slug from page title if slug undefined', () => {
   const page = createPage()
-  const config = { permalinks: { path: '/:slug/' } }
+  const permalinks = { path: '/:slug/' }
 
   const expected = '/page-title/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL from the permalinks configuration, replacing :filename from page filename', () => {
   const page = createPage()
-  const config = { permalinks: { path: '/:filename/' } }
+  const permalinks = { path: '/:filename/' }
 
   const expected = '/page/'
 
-  expect(url(path, page, config)).toBe(expected)
+  expect(url(path, page, permalinks)).toBe(expected)
 })
 
 test('Generate a URL taken from the frontmatter "url" field', () => {
@@ -160,5 +160,5 @@ test('Generate a URL taken from the frontmatter "url" field', () => {
 
   const expected = page.url
 
-  expect(url(path, page, {})).toBe(expected)
+  expect(url(path, page)).toBe(expected)
 })

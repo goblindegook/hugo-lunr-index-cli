@@ -1,6 +1,6 @@
 import { mkdtempSync, readFileSync } from 'fs'
-import { join } from 'path'
 import { tmpdir } from 'os'
+import { join } from 'path'
 import { globFilesP, readFileP, writeFileP } from '../../src/lib/file'
 
 test('globFilesP returns an empty list when pattern matches no files', async () => {
