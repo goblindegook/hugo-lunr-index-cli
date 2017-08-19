@@ -17,7 +17,6 @@ async function indexPath (path = '') {
 
 const argv = yargs
   .usage('$0 [path]')
-  .command('*', 'Index Hugo site at the provided path.')
   .version()
   .help()
   .argv
