@@ -43,15 +43,21 @@ function parseFrontmatter (content: string): Frontmatter {
   }
 }
 
+function stripMarkup (text: string): string {
+  return S(marked(text)).stripTags().s.trim()
+}
+
 function parseContent (content: string): string {
   const match = content.match(/^((---|= yaml =|\+\+\+)$[\s\S]*?^(?:\2|\.\.\.)(?:\r?\n)?)([\s\S]*)/m)
   const rawContent = match && match[3] || ''
-  return S(marked(rawContent)).stripTags().s.trim()
+  return stripMarkup(rawContent)
 }
 
 export function parsePage (content: string): Page {
+  const attributes = parseFrontmatter(content)
   return {
-    ...parseFrontmatter(content),
-    content: parseContent(content)
+    ...attributes,
+    content: parseContent(content),
+    title: stripMarkup(attributes.title)
   }
 }
