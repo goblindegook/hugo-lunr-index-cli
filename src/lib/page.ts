@@ -54,10 +54,8 @@ function parseContent (content: string): string {
 }
 
 export function parsePage (content: string): Page {
-  const attributes = parseFrontmatter(content)
   return {
-    ...attributes,
-    content: parseContent(content),
-    title: stripMarkup(attributes.title)
+    ...parseFrontmatter(content),
+    content: parseContent(content)
   }
 }
