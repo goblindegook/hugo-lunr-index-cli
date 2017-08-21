@@ -4,12 +4,8 @@ import * as S from 'string'
 import { Permalinks } from './config'
 import { Page } from './page'
 
-function slashAtIndex (s: string, index: number): string {
-  return s.length > index && s[index] === '/' ? '' : '/'
-}
-
-function maybeAddSlashes (s: string): string {
-  return slashAtIndex(s, 0) + s + slashAtIndex(s, s.length - 1)
+function ensureSlashes (s: string): string {
+  return S(s).ensureLeft('/').ensureRight('/').s
 }
 
 function buildPermalink (filepath: string, page: Page, permalinks: Permalinks): string {
@@ -39,5 +35,5 @@ function buildUrl (filepath: string, page: Page): string {
 }
 
 export function url (filepath: string, page: Page, permalinks: Permalinks = {}): string {
-  return page.url || maybeAddSlashes(buildPermalink(filepath, page, permalinks) || buildUrl(filepath, page))
+  return page.url || ensureSlashes(buildPermalink(filepath, page, permalinks) || buildUrl(filepath, page))
 }
